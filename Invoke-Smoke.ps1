@@ -11,10 +11,11 @@ $resultPath = Join-Path $repoRoot 'dsc-smoke-output.txt'
 # Make the resource manifest discoverable. DSC requires command-resource manifests
 # to be discoverable through PATH.
 $resourcePath = Join-Path $repoRoot 'resources/SimpleGet'
-$env:PATH = "$resourcePath$([IO.Path]::PathSeparator)$env:PATH"
+$pwshPath = Split-Path -Parent (Get-Command pwsh).Source
+#$env:PATH = "$resourcePath$([IO.Path]::PathSeparator)$env:PATH"
 
 # Optional, but useful for diagnosing path behaviour.
-$env:DSC_RESOURCE_PATH = $resourcePath
+$env:DSC_RESOURCE_PATH = (@($DscPathResources, $pwshPath) -join [IO.Path]::PathSeparator)
 
 @"
 Repo root:          $repoRoot
