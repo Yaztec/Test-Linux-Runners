@@ -1,0 +1,65 @@
+name: Linux DSC smoke test
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  dsc-linux-smoke:
+    name: Run minimal DSC get on Linux
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Verify PowerShell
+        shell: bash
+        run: |
+          which pwsh
+          pwsh --version
+
+      - name: Install DSC 3.2.0
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          DSC_VERSION="3.2.0"
+          DSC_ARCHIVE="DSC-${DSC_VERSION}-x86_64-linux.tar.gz"
+          DSC_URL="https://github.com/PowerShell/DSC/releases/download/v${DSC_VERSION}/${DSC_ARCHIVE}"
+
+          mkdir -p "$HOME/dsc"
+          curl -L "$DSC_URL" -o "$DSC_ARCHIVE"
+          tar -xzf "$DSC_ARCHIVE" -C "$HOME/dsc"
+
+          chmod +x "$HOME/dsc/dsc"
+          echo "$HOME/dsc" >> "$GITHUB_PATH"
+
+      - name: Verify DSC
+        shell: bash
+        run: |
+          dsc --version
+          dsc --help | head -40
+
+      - name: Run smoke controller
+        shell: pwsh
+        run: |
+          ./Invoke-Smoke.ps1
+
+      - name: Output smoke result file
+        if: always()
+        shell: bash
+        run: |
+          echo "----- dsc-smoke-output.txt -----"
+          cat ./dsc-smoke-output.txt
+
+      - name: Upload smoke result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dsc-linux-smoke-output
+          path: ./dsc-smoke-output.txt
+          retention-days: 2

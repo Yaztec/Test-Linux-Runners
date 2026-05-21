@@ -1,0 +1,45 @@
+{
+  "$schema": "https://raw.githubusercontent.com/PowerShell/DSC/main/schemas/v3.1.0/resource/manifest.json",
+  "type": "Contoso.Simple/SimpleGet",
+  "version": "0.1.0",
+  "description": "Minimal DSC v3 command resource used to smoke test DSC resource invocation on Linux.",
+  "get": {
+    "executable": "pwsh",
+    "args": [
+      "-NoLogo",
+      "-NoProfile",
+      "-NonInteractive",
+      "-File",
+      "./resources/SimpleGet/Get-SimpleGet.ps1"
+    ],
+    "input": "stdin"
+  },
+  "schema": {
+    "embedded": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "SimpleGet",
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "_exist": {
+          "type": "boolean"
+        },
+        "id": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "platform": {
+          "type": "string"
+        },
+        "pwshVersion": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
