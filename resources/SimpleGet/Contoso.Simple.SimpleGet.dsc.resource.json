@@ -17,7 +17,7 @@
   "schema": {
     "embedded": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "title": "SimpleGet",
+      "title": "Contoso.Simple/SimpleGet",
       "type": "object",
       "required": [
         "id"
