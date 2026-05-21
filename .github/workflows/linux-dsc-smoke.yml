@@ -22,25 +22,18 @@ jobs:
           which pwsh
           pwsh --version
 
-      - name: Install DSC 3.2.0
+      - name: Install and Verify DSC 3.2.1
         shell: bash
         run: |
           set -euo pipefail
 
-          DSC_VERSION="3.2.0"
-          DSC_ARCHIVE="DSC-${DSC_VERSION}-x86_64-linux.tar.gz"
-          DSC_URL="https://github.com/PowerShell/DSC/releases/download/v${DSC_VERSION}/${DSC_ARCHIVE}"
+          DSC_VERSION="3.2.1"
+          DSC_DEB="dsc_${DSC_VERSION}-1_amd64.deb"
+          DSC_URL="https://github.com/PowerShell/DSC/releases/download/v${DSC_VERSION}/${DSC_DEB}"
 
-          mkdir -p "$HOME/dsc"
-          curl -L "$DSC_URL" -o "$DSC_ARCHIVE"
-          tar -xzf "$DSC_ARCHIVE" -C "$HOME/dsc"
+          curl -L "$DSC_URL" -o "$DSC_DEB"
+          sudo dpkg -i "$DSC_DEB"
 
-          chmod +x "$HOME/dsc/dsc"
-          echo "$HOME/dsc" >> "$GITHUB_PATH"
-
-      - name: Verify DSC
-        shell: bash
-        run: |
           dsc --version
           dsc --help | head -40
 
