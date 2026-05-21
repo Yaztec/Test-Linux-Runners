@@ -36,6 +36,7 @@ jobs:
 
           dsc --version
           dsc --help | head -40
+          dsc resource list
 
       - name: Run smoke controller
         shell: pwsh
