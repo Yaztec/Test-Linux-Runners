@@ -15,7 +15,7 @@ $pwshPath = Split-Path -Parent (Get-Command pwsh).Source
 #$env:PATH = "$resourcePath$([IO.Path]::PathSeparator)$env:PATH"
 
 # Optional, but useful for diagnosing path behaviour.
-$env:DSC_RESOURCE_PATH = (@($DscPathResources, $pwshPath) -join [IO.Path]::PathSeparator)
+$env:DSC_RESOURCE_PATH = (@($resourcePath, $pwshPath) -join [IO.Path]::PathSeparator)
 
 # Custom single-folder variable used by the manifest to find the script.
 $env:SIMPLEGET_RESOURCE_ROOT = $resourcePath
