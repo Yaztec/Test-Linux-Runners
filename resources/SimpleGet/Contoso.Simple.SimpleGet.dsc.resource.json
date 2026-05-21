@@ -10,7 +10,7 @@
       "-NoProfile",
       "-NonInteractive",
       "-File",
-      "envvar:SIMPLEGET_RESOURCE_ROOT]/Get-SimpleGet.ps1"
+      "[envvar:SIMPLEGET_RESOURCE_ROOT]/Get-SimpleGet.ps1"
     ],
     "input": "stdin"
   },
