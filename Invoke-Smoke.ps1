@@ -31,7 +31,7 @@ $PSVersionTable | Out-String | Add-Content -Path $resultPath
 dsc --version 2>&1 | Out-String | Add-Content -Path $resultPath
 
 "`n=== dsc resource list ===" | Add-Content -Path $resultPath
-dsc resource list 2>&1 | Out-String | Add-Content -Path $resultPath
+dsc -l trace resource list 2>&1 | Out-String | Add-Content -Path $resultPath
 
 "`n=== dsc resource schema ===" | Add-Content -Path $resultPath
 dsc resource schema --resource 'Contoso.Simple/SimpleGet' 2>&1 | Out-String | Add-Content -Path $resultPath

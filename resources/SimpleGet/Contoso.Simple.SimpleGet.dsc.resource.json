@@ -10,7 +10,7 @@
       "-NoProfile",
       "-NonInteractive",
       "-File",
-      "./resources/SimpleGet/Get-SimpleGet.ps1"
+      "Get-SimpleGet.ps1"
     ],
     "input": "stdin"
   },
